@@ -12,10 +12,12 @@ import router from './router'
 import ElementPlus from 'element-plus';
 import 'element-plus/theme-chalk/index.css';
 import locale from 'element-plus/lib/locale/lang/zh-cn'
+import { Search } from '@element-plus/icons-vue' 
 
 const app = createApp(App)
 
 app.use(router)
 app.use(ElementPlus,{locale})
+app.component(Search.name, Search) // 全局注册 Search 图标
 
 app.mount('#app')

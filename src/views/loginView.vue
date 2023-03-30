@@ -38,8 +38,8 @@
         </el-form-item>
 
         <div class="tips">
-          <el-button type="text" @click="exchange">登录</el-button>
-          <el-button type="text" @click="exchange">注册</el-button>
+          <el-button link @click="exchange">登录</el-button>
+          <el-button link @click="exchange">注册</el-button>
         </div>
       </el-form>
     </div>
