@@ -1,3 +1,11 @@
+/*
+ * @Descripttion: a config file about router
+ * @Author: likeorange
+ * @Date: 2023-03-27 23:14:41
+ * @LastEditors: likeorange
+ * @LastEditTime: 2023-03-30 17:25:23
+ */
+
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/homeView.vue'
 import loginView from '../views/loginView.vue'

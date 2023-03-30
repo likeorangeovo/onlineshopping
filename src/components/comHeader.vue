@@ -1,5 +1,5 @@
 <!--
- * @Descripttion: 
+ * @Descripttion: a component to the mall header
  * @Author: likeorange
  * @Date: 2023-03-28 16:39:17
  * @LastEditors: likeorange

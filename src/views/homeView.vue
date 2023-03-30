@@ -1,9 +1,9 @@
 <!--
- * @Descripttion: 
+ * @Descripttion: mall homepage
  * @Author: likeorange
  * @Date: 2023-03-28 20:11:56
  * @LastEditors: likeorange
- * @LastEditTime: 2023-03-30 12:41:32
+ * @LastEditTime: 2023-03-31 00:22:21
 -->
 
 <template>

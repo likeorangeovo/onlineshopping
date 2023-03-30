@@ -1,3 +1,11 @@
+/*
+ * @Descripttion: packaging for axios
+ * @Author: likeorange
+ * @Date: 2023-03-29 11:42:55
+ * @LastEditors: likeorange
+ * @LastEditTime: 2023-03-30 17:24:18
+ */
+
 import axios from 'axios'
 import { ElMessage } from 'element-plus'
 

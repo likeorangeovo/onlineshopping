@@ -1,3 +1,11 @@
+/*
+ * @Descripttion: a hook to deal with throwing error
+ * @Author: likeorange
+ * @Date: 2023-03-29 19:43:17
+ * @LastEditors: likeorange
+ * @LastEditTime: 2023-03-30 17:21:06
+ */
+
 import { ElMessage } from 'element-plus'
 
 export default function (params) {
