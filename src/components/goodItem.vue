@@ -3,19 +3,20 @@
  * @Author: likeorange
  * @Date: 2023-03-30 16:17:52
  * @LastEditors: likeorange
- * @LastEditTime: 2023-03-30 17:19:37
+ * @LastEditTime: 2023-03-31 14:02:11
 -->
 
 <template >
-   <li class="goodsItem">
-      <div class="imgBox">
-        <img src="http://yanxuan.nosdn.127.net/33c1b1b20972990e0ae81f260b00f036.jpg" alt="商品图片" @click="navTo('/mall/goods/'+id)"/>
-      </div>
-      <div class="goodsInfo">
-        <span class="goodsName ellipsis" @click="navTo('/mall/goods/'+id)">{{name}}</span>
-        <span class="price">{{'¥'+price}}</span>
-      </div>
-    </li>
+  <li class="goodsItem">
+    <div class="imgBox">
+      <img :src=good.primary_pic_url alt="商品图片"
+        @click="navTo('/mall/goods/')" />
+    </div>
+    <div class="goodsInfo">
+      <span class="goodsName ellipsis" @click="navTo('/mall/goods/' + id)">{{good.name}}</span>
+      <span class="price">{{ '¥' + good.retail_price }}</span>
+    </div>
+  </li>
 </template>
 <script>
 import { useRouter, useRoute } from 'vue-router'
@@ -32,22 +33,10 @@ export default {
     }
   },
   props: {
-    id: {
-      type: Number,
-      default: 0
-    },
-    img: {
-      type: String,
-      default: ''
-    },
-    name: {
-      type: String,
-      default: ''
-    },
-    price: {
-      type: Number,
-      default: 0
-    },
+    good: {
+      type: Object,
+      default: () => { },
+    }
   },
 }
 </script>

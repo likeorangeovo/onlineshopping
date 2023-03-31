@@ -51,7 +51,7 @@ import { reactive, ref } from "vue";
 import { login, register } from "../request/index.js"
 import errThrow from "../hooks/errThrow.js"
 export default {
-  name: "loginView",
+  name: "LoginView",
   setup() {
     let formState = ref(1)
     let loginForm = reactive({

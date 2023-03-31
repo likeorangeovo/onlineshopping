@@ -1,35 +1,73 @@
 <!--
+ * @Descripttion: 
+ * @Author: likeorange
+ * @Date: 2023-03-28 20:11:56
+ * @LastEditors: likeorange
+ * @LastEditTime: 2023-03-31 19:52:28
+-->
+<!--
  * @Descripttion: mall homepage
  * @Author: likeorange
  * @Date: 2023-03-28 20:11:56
  * @LastEditors: likeorange
- * @LastEditTime: 2023-03-31 00:22:21
+ * @LastEditTime: 2023-03-31 15:41:55
 -->
 
 <template>
   <div>
     <comHeader></comHeader>
-    <el-carousel indicator-position="outside" type="card" :height = "'55'+'vh'">
-      <el-carousel-item  v-for="item in imagebox" :key="item.id">
-        <img :src="item.idView" class="image">
+    <el-carousel indicator-position="outside" type="card" :height="'65' + 'vh'">
+      <el-carousel-item v-for="item in carouselBox" :key="item.id">
+        <img :src=item.primary_pic_url class="image">
       </el-carousel-item>
     </el-carousel>
 
-    <goodItem></goodItem>
+    <ul class="infinite-list">
+      <li v-for="item in hotgoodsBox" :key="item.id" class="infinite-list-item">
+        <goodItem :good="item"></goodItem>
+      </li>
+    </ul>
+
+    <div class='bottom'>
+      <el-pagination id='bottom' v-model:current-page="page" background layout="prev, pager, next" :pager-count="11"
+        :total="total" @current-change="load" />
+    </div>
+
   </div>
 </template>
 <script>
 import comHeader from "../components/comHeader.vue";
 import goodItem from "../components/goodItem.vue";
+import { ref, onBeforeMount } from 'vue';
+import { carousel, hotgoods } from "../request/index.js"
 export default {
-  setup(){
-    let imagebox = [
-    {id: 0, idView: 'http://yanxuan.nosdn.127.net/33c1b1b20972990e0ae81f260b00f036.jpg'},
-      {id: 1, idView: 'http://yanxuan.nosdn.127.net/599ee624350ecb9e70c32375c0cd4807.jpg'}
-    ]
+  name: "homeView",
+  setup() {
+    let page = ref(1)
+    let total = ref(0)
+    let carouselBox = ref([])
+    let hotgoodsBox = ref([])
+    async function load() {
+      const hotgoodsRes = await hotgoods({ page: page.value })
+      hotgoodsBox.value = hotgoodsRes.data.data
+    }
+
+    onBeforeMount(async () => {
+      //dom 挂载后
+      const carouselRes = await carousel()
+      carouselBox.value.push(...carouselRes.data.data)
+      const hotgoodsRes = await hotgoods({ page: page.value })
+      console.log(hotgoodsRes)
+      total.value = hotgoodsRes.data.total
+      hotgoodsBox.value.push(...hotgoodsRes.data.data)
+    })
     return {
-    imagebox
-  }
+      page,
+      total,
+      carouselBox,
+      hotgoodsBox,
+      load,
+    }
   },
   components: {
     comHeader,
@@ -39,10 +77,12 @@ export default {
 }
 </script>
 <style scoped>
+/* 轮播图样式 */
 :deep(.el-carousel__item) {
-/*修改卡片宽度*/
+  /*修改卡片宽度*/
   width: 50vw;
 }
+
 .el-carousel__item:nth-child(2n) {
   background-color: #99a9bf;
 }
@@ -50,9 +90,36 @@ export default {
 .el-carousel__item:nth-child(2n + 1) {
   background-color: #d3dce6;
 }
-.image{
-/*设置图片宽度*/
-  width:100%;
-  height:inherit;
+
+.image {
+  /*设置图片宽度*/
+  width: 100%;
+  height: inherit;
+}
+
+/* 无限滚动样式 */
+.infinite-list {
+  text-align: center;
+  display: flex;
+  flex-wrap: wrap;
+  justify-items: center;
+  padding: 0 5px;
+  list-style-type: none;
+}
+
+.infinite-list .infinite-list-item {
+  flex: 0 0 24%;
+  margin-right: calc(4% / 3);
+  margin-bottom: calc(4% / 3);
+}
+
+.infinite-list-item:nth-child(4n) {
+  margin-right: 0;
+}
+
+.bottom {
+  display: -webkit-flex;
+  -webkit-justify-content: center;
+  padding: 10px 100px 30px 100px;
 }
 </style>
