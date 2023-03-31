@@ -41,3 +41,11 @@ export const hotgoods =  (query) => axiosUser({
     'content-type':'application/json'
   }
 })
+
+export const category =  () => axiosUser({
+  url:'/category',
+  method:'get',
+  headers:{
+    'content-type':'application/json'
+  }
+})

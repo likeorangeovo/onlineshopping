@@ -57,7 +57,6 @@ export default {
       const carouselRes = await carousel()
       carouselBox.value.push(...carouselRes.data.data)
       const hotgoodsRes = await hotgoods({ page: page.value })
-      console.log(hotgoodsRes)
       total.value = hotgoodsRes.data.total
       hotgoodsBox.value.push(...hotgoodsRes.data.data)
     })
