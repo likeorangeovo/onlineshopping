@@ -3,22 +3,9 @@
  * @Author: likeorange
  * @Date: 2023-03-28 16:39:17
  * @LastEditors: likeorange
- * @LastEditTime: 2023-03-31 23:28:03
+ * @LastEditTime: 2023-04-01 15:55:41
 -->
 <template>
-  <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" background-color="#545c64"
-    text-color="#fff" active-text-color="#ffd04b" :ellipsis="false" @select="handleSelect">
-    <el-menu-item index="0">LOGO</el-menu-item>
-    <div class="flex-grow" />
-    <el-menu-item index="1">购物车</el-menu-item>
-    <el-menu-item index="2">我的订单</el-menu-item>
-    <el-sub-menu index="3">
-      <template #title>个人中心</template>
-      <el-menu-item index="3-1">个人信息</el-menu-item>
-      <el-menu-item index="3-2">退出登录</el-menu-item>
-    </el-sub-menu>
-  </el-menu>
-
   <div class="search">
     <el-input placeholder="请输入内容" v-model="content">
       <template #suffix>
@@ -29,11 +16,11 @@
     </el-input>
   </div>
 
-  <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect">
-  <el-menu-item index="1">首页</el-menu-item>
-    <el-sub-menu :index=String(item.index) v-for="item in mainCatrgory" :key="item.id">
+  <el-menu :default-active="$route.path" class="el-menu-demo" mode="horizontal" @select="handleSelect" :router="true" >
+  <el-menu-item index="/home">首页</el-menu-item>
+    <el-sub-menu :index=item.id v-for="item in mainCatrgory" :key="item.id">
       <template #title>{{ item.name }}</template>
-      <el-menu-item :index="item.index + '-' + index" v-for="(sub, index) in item.sub" :key="sub.id">{{ sub.name }}</el-menu-item>
+      <el-menu-item :index="'/category/' + sub.id" v-for="( sub ) in item.sub" :key="sub.id">{{ sub.name }}</el-menu-item>
     </el-sub-menu>
   </el-menu>
 </template>
@@ -91,4 +78,5 @@ export default {
   font-size: 100%;
   line-height: 100%;
 }
+
 </style>

@@ -3,7 +3,7 @@
  * @Author: likeorange
  * @Date: 2023-03-29 11:48:45
  * @LastEditors: likeorange
- * @LastEditTime: 2023-03-31 16:46:04
+ * @LastEditTime: 2023-04-01 15:52:07
  */
 import axiosUser from "./request";
 
@@ -44,6 +44,15 @@ export const hotgoods =  (query) => axiosUser({
 
 export const category =  () => axiosUser({
   url:'/category',
+  method:'get',
+  headers:{
+    'content-type':'application/json'
+  }
+})
+
+export const categoryGoods = (query) => axiosUser({
+  url:'/categorygoods',
+  params:query,
   method:'get',
   headers:{
     'content-type':'application/json'

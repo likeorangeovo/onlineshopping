@@ -1,11 +1,4 @@
 <!--
- * @Descripttion: 
- * @Author: likeorange
- * @Date: 2023-03-28 20:11:56
- * @LastEditors: likeorange
- * @LastEditTime: 2023-03-31 19:52:28
--->
-<!--
  * @Descripttion: mall homepage
  * @Author: likeorange
  * @Date: 2023-03-28 20:11:56
@@ -14,30 +7,30 @@
 -->
 
 <template>
-  <div>
-    <comHeader></comHeader>
-    <el-carousel indicator-position="outside" type="card" :height="'65' + 'vh'">
-      <el-carousel-item v-for="item in carouselBox" :key="item.id">
-        <img :src=item.primary_pic_url class="image">
-      </el-carousel-item>
-    </el-carousel>
+  <comTop></comTop>
+  <comHeader v-cloak></comHeader>
 
-    <ul class="infinite-list">
-      <li v-for="item in hotgoodsBox" :key="item.id" class="infinite-list-item">
-        <goodItem :good="item"></goodItem>
-      </li>
-    </ul>
+  <el-carousel indicator-position="outside" type="card" :height="'65' + 'vh'">
+    <el-carousel-item v-for="item in carouselBox" :key="item.id">
+      <img :src=item.primary_pic_url class="image">
+    </el-carousel-item>
+  </el-carousel>
 
-    <div class='bottom'>
-      <el-pagination id='bottom' v-model:current-page="page" background layout="prev, pager, next" :pager-count="11"
-        :total="total" @current-change="load" />
-    </div>
+  <ul class="infinite-list">
+    <li v-for="item in hotgoodsBox" :key="item.id" class="infinite-list-item">
+      <goodItem :good="item"></goodItem>
+    </li>
+  </ul>
 
+  <div class='bottom'>
+    <el-pagination id='bottom' v-model:current-page="page" background layout="prev, pager, next" :pager-count="11"
+      :total="total" @current-change="load" />
   </div>
 </template>
 <script>
 import comHeader from "../components/comHeader.vue";
 import goodItem from "../components/goodItem.vue";
+import comTop from "../components/comTop.vue";
 import { ref, onBeforeMount } from 'vue';
 import { carousel, hotgoods } from "../request/index.js"
 export default {
@@ -70,7 +63,8 @@ export default {
   },
   components: {
     comHeader,
-    goodItem
+    goodItem,
+    comTop
   },
 
 }
@@ -121,4 +115,8 @@ export default {
   -webkit-justify-content: center;
   padding: 10px 100px 30px 100px;
 }
+
+[v-cloak] {
+display: none; 
+} 
 </style>
