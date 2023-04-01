@@ -3,30 +3,33 @@
  * @Author: likeorange
  * @Date: 2023-03-30 16:17:52
  * @LastEditors: likeorange
- * @LastEditTime: 2023-03-31 14:02:11
+ * @LastEditTime: 2023-04-02 00:11:08
 -->
 
 <template >
   <li class="goodsItem">
     <div class="imgBox">
-      <img :src=good.primary_pic_url alt="商品图片"
-        @click="navTo('/mall/goods/')" />
+      <img :src=good.primary_pic_url alt="商品图片" @click="navTo('/mall/goods/')" />
     </div>
     <div class="goodsInfo">
-      <span class="goodsName ellipsis" @click="navTo('/mall/goods/' + id)">{{good.name}}</span>
+      <span class="goodsName ellipsis" @click="navTo(good.id)">{{ good.name }}</span>
       <span class="price">{{ '¥' + good.retail_price }}</span>
     </div>
   </li>
 </template>
 <script>
-import { useRouter, useRoute } from 'vue-router'
+import { useRouter } from 'vue-router'
 export default {
   name: 'goodsItem',
   setup() {
     const router = useRouter()
-    const route = useRoute()
-    const navTo = function () {
-      router.push(route);
+    const navTo = function (id) {
+      router.push({
+        name: 'GoodsDetail',
+        params: {
+          id: id,
+        },
+      });
     }
     return {
       navTo

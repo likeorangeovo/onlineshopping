@@ -58,3 +58,12 @@ export const categoryGoods = (query) => axiosUser({
     'content-type':'application/json'
   }
 })
+
+export const goodDetail = (query) => axiosUser({
+  url:'/gooddetail',
+  params:query,
+  method:'get',
+  headers:{
+    'content-type':'application/json'
+  }
+})

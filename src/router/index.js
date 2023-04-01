@@ -3,7 +3,7 @@
  * @Author: likeorange
  * @Date: 2023-03-27 23:14:41
  * @LastEditors: likeorange
- * @LastEditTime: 2023-04-01 17:17:24
+ * @LastEditTime: 2023-04-01 17:36:55
  */
 
 import { createRouter, createWebHistory } from 'vue-router'
@@ -38,6 +38,11 @@ const router = createRouter({
               component:() => import('../views/GoodsList.vue'),
             },
           ]
+        },
+        {
+          path: 'goods/:id',
+          name: 'GoodsDetail',
+          component: () => import('../views/GoodsDetail.vue'),
         }
       ]
     },
@@ -45,11 +50,6 @@ const router = createRouter({
       path: '/login',
       name: 'login',
       component: () => import('../views/loginView.vue')
-    },
-    {
-      path: '/category/:id',
-      name: 'category',
-      component: () => import('../views/categoryShow.vue')
     },
   ]
 })

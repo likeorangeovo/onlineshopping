@@ -36,7 +36,6 @@ export default {
     }
     onBeforeMount(async () => {
       const goodsRes = await categoryGoods({ id:route.params.id, page: page.value })
-      console.log(goodsRes)
       total.value = goodsRes.data.total
       goodsBox.value.push(...goodsRes.data.data)
     })
