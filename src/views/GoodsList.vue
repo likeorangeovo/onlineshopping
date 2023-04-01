@@ -3,13 +3,10 @@
  * @Author: likeorange
  * @Date: 2023-04-01 00:24:41
  * @LastEditors: likeorange
- * @LastEditTime: 2023-04-01 16:07:53
+ * @LastEditTime: 2023-04-01 17:14:10
 -->
 
 <template>
-  <comTop></comTop>
-  <comHeader></comHeader>
-
   <ul class="infinite-list">
     <li v-for="item in goodsBox" :key="item.id" class="infinite-list-item">
       <goodItem :good="item"></goodItem>
@@ -22,8 +19,6 @@
 
 </template>
 <script>
-import comTop from "../components/comTop.vue";
-import comHeader from "../components/comHeader.vue";
 import goodItem from "../components/goodItem.vue";
 import { ref, onBeforeMount } from 'vue';
 import { categoryGoods } from "../request/index.js"
@@ -53,8 +48,6 @@ export default {
     }
   },
   components: {
-    comTop,
-    comHeader,
     goodItem
   }
 

@@ -3,7 +3,7 @@
  * @Author: likeorange
  * @Date: 2023-03-28 16:39:17
  * @LastEditors: likeorange
- * @LastEditTime: 2023-04-01 15:55:41
+ * @LastEditTime: 2023-04-01 17:22:22
 -->
 <template>
   <div class="search">
@@ -17,10 +17,10 @@
   </div>
 
   <el-menu :default-active="$route.path" class="el-menu-demo" mode="horizontal" @select="handleSelect" :router="true" >
-  <el-menu-item index="/home">首页</el-menu-item>
+  <el-menu-item index="/mall/show">首页</el-menu-item>
     <el-sub-menu :index=item.id v-for="item in mainCatrgory" :key="item.id">
       <template #title>{{ item.name }}</template>
-      <el-menu-item :index="'/category/' + sub.id" v-for="( sub ) in item.sub" :key="sub.id">{{ sub.name }}</el-menu-item>
+      <el-menu-item :index="'/mall/show/goodsList/' + sub.id" v-for="( sub ) in item.sub" :key="sub.id">{{ sub.name }}</el-menu-item>
     </el-sub-menu>
   </el-menu>
 </template>

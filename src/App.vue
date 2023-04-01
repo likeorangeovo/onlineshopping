@@ -7,7 +7,7 @@
 -->
 <template>
   <div v-cloak>
-    <RouterView :key="route.fullPath" />
+    <RouterView />
   </div>
 </template>
 
