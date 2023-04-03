@@ -3,7 +3,7 @@
  * @Author: likeorange
  * @Date: 2023-03-30 16:17:52
  * @LastEditors: likeorange
- * @LastEditTime: 2023-04-02 00:11:08
+ * @LastEditTime: 2023-04-03 23:25:27
 -->
 
 <template >
@@ -19,16 +19,22 @@
 </template>
 <script>
 import { useRouter } from 'vue-router'
+import { store } from "../request/store.js";
 export default {
   name: 'goodsItem',
   setup() {
     const router = useRouter()
     const navTo = function (id) {
-      router.push({
-        name: 'GoodsDetail',
-        params: {
-          id: id,
-        },
+      if (store.isLogin) {
+        return router.push({
+          name: 'GoodsDetail',
+          params: {
+            id: id,
+          },
+        });
+      }
+      return router.push({
+        name: 'login'
       });
     }
     return {

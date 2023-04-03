@@ -3,7 +3,7 @@
  * @Author: likeorange
  * @Date: 2023-03-28 22:02:42
  * @LastEditors: likeorange
- * @LastEditTime: 2023-03-29 21:13:23
+ * @LastEditTime: 2023-04-03 23:46:50
 -->
 <template>
   <div id="background">
@@ -50,17 +50,29 @@
 import { reactive, ref } from "vue";
 import { login, register } from "../request/index.js"
 import errThrow from "../hooks/errThrow.js"
+import { store } from "../request/store.js";
+import { useRouter } from 'vue-router'
 export default {
   name: "LoginView",
   setup() {
     let formState = ref(1)
+    const router = useRouter()
     let loginForm = reactive({
       username: "admin",
       password: "testpassword",
     });
     async function loginReq() {
       const res = await login(JSON.stringify(loginForm))
+      if (res.code == 0) {
+        return errThrow(res)
+      }
+      store.isLogin = true;
+      localStorage.setItem("isLogin",true)
+      router.push({
+        name: 'MallIndex',
+      })
       return errThrow(res)
+
     }
     async function registerReq() {
       const res = await register(JSON.stringify(loginForm))

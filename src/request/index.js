@@ -25,6 +25,14 @@ export const register =  (params) => axiosUser({
   }
 })
 
+export const logout =  () => axiosUser({
+  url:'/logout',
+  method:'get',
+  headers:{
+    'content-type':'application/json'
+  }
+})
+
 export const carousel =  () => axiosUser({
   url:'/carousel',
   method:'get',
