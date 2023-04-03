@@ -12,12 +12,14 @@ import router from './router'
 import ElementPlus from 'element-plus';
 import 'element-plus/theme-chalk/index.css';
 import locale from 'element-plus/lib/locale/lang/zh-cn'
-import { Search } from '@element-plus/icons-vue' 
+import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 
 const app = createApp(App)
 
 app.use(router)
 app.use(ElementPlus,{locale})
-app.component(Search.name, Search) // 全局注册 Search 图标
+for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
+  app.component(key, component)
+}
 
 app.mount('#app')

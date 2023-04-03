@@ -3,11 +3,16 @@
  * @Author: likeorange
  * @Date: 2023-03-27 23:14:41
  * @LastEditors: likeorange
- * @LastEditTime: 2023-04-01 16:11:36
+ * @LastEditTime: 2023-04-02 16:07:02
 -->
 <template>
   <div v-cloak>
-    <RouterView />
+    <router-view v-slot="{ Component }">
+    <keep-alive>
+      <component :is="Component"  v-if="$route.meta.keepAlive"/>
+    </keep-alive>
+    <component :is="Component"  v-if="!$route.meta.keepAlive"/>
+  </router-view> 
   </div>
 </template>
 
@@ -28,10 +33,9 @@ export default {
   margin: 0;
   padding: 0;
 }
-
 #app {
   width: 100%;
-  height: 100%;
+  height: 100vh;
   position: fixed;
   background-size: 100% 100%;
   overflow-y: scroll;
