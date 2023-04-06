@@ -3,7 +3,7 @@
  * @Author: likeorange
  * @Date: 2023-03-29 11:48:45
  * @LastEditors: likeorange
- * @LastEditTime: 2023-04-01 15:52:07
+ * @LastEditTime: 2023-04-06 14:21:48
  */
 import axiosUser from "./request";
 
@@ -69,6 +69,24 @@ export const categoryGoods = (query) => axiosUser({
 
 export const goodDetail = (query) => axiosUser({
   url:'/gooddetail',
+  params:query,
+  method:'get',
+  headers:{
+    'content-type':'application/json'
+  }
+})
+
+export const addCart = (query) => axiosUser({
+  url:'/addcart',
+  data:query,
+  method:'post',
+  headers:{
+    'content-type':'application/json'
+  }
+})
+
+export const getCart = (query) => axiosUser({
+  url:'/getcart',
   params:query,
   method:'get',
   headers:{

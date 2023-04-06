@@ -3,7 +3,7 @@
  * @Author: likeorange
  * @Date: 2023-04-01 17:37:24
  * @LastEditors: likeorange
- * @LastEditTime: 2023-04-02 00:32:04
+ * @LastEditTime: 2023-04-05 22:41:50
 -->
 <template >
   <div class="goodInfo">
@@ -12,21 +12,21 @@
     </div>
     <div class="infoRight">
       <div class="infoBox">
-        <h3 class="name">{{good.name}}</h3>
+        <h3 class="name">{{ good.name }}</h3>
       </div>
       <div class="infoBox">
-        <p>{{good.goods_brief}}</p>
+        <p>{{ good.goods_brief }}</p>
       </div>
       <div class="infoBox">
-        <h3 class="price">{{'¥' + good.retail_price}}</h3>
+        <h3 class="price">{{ '¥' + good.retail_price }}</h3>
       </div>
       <div class="infoBox">
         <span>库存：</span>
-        <span class="tips">{{'剩余' + good.goods_number + '件'}}</span>
+        <span class="tips">{{ '剩余' + good.goods_number + '件' }}</span>
       </div>
       <div class="infoBox">
         <span>数量：</span>
-        <el-input-number v-model="num" :min="1" :max="good.goods_number" @change="handleChange" />
+        <el-input-number v-model="num" :min="1" :max="good.goods_number" />
       </div>
       <button class="buyBtn" @click="buy">立即购买</button>
       <button @click="addToCart">加入购物车</button>
@@ -35,25 +35,34 @@
 </template>
 <script>
 import { onBeforeMount, ref } from 'vue'
-import { goodDetail } from "../request/index.js"
+import { goodDetail, addCart } from "../request/index.js"
 import { useRoute } from 'vue-router'
+import errThrow from "../hooks/errThrow.js";
 export default {
   setup() {
-    const num = ref(1)
+    let num = ref(1)
     let good = ref({})
     const route = useRoute()
     const handleChange = () => {
-      num.value += 1;
+      console.log(1)
     }
     onBeforeMount(async () => {
-      const goodDetailRes = await goodDetail({id:route.params.id})
-      good.value = {...goodDetailRes.data.data}
+      const goodDetailRes = await goodDetail({ id: route.params.id })
+      good.value = { ...goodDetailRes.data.data }
     })
-    const buy = () => {
-      console.log(buy)
-    }
-    const addToCart = () => {
+    function buy() {
       console.log(addToCart)
+    }
+    async function addToCart() {
+      const addCartRes = await addCart(JSON.stringify({ 
+        id: good.value.id,
+        name:good.value.name,
+        retail_price:good.value.retail_price,
+        goods_number:num.value,
+        list_pic_url:good.value.list_pic_url,
+      }))
+      errThrow(addCartRes)
+      console.log(1111)
     }
     return {
       num,
