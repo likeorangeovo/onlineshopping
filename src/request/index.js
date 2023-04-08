@@ -93,3 +93,40 @@ export const getCart = (query) => axiosUser({
     'content-type':'application/json'
   }
 })
+
+export const removeCart = (query) => axiosUser({
+  url:'/removecart',
+  params:query,
+  method:'get',
+  headers:{
+    'content-type':'application/json'
+  }
+})
+
+export const addOrder = (query) => axiosUser({
+  url:'/addorder',
+  data:query,
+  method:'post',
+  headers:{
+    'content-type':'application/json'
+  }
+})
+
+export const getOrder = (query) => axiosUser({
+  url:'/getorder',
+  params:query,
+  method:'get',
+  headers:{
+    'content-type':'application/json'
+  }
+})
+
+export const changeStatus = (query) => axiosUser({
+  url:'/changestatus',
+  params:query,
+  method:'get',
+  headers:{
+    'content-type':'application/json'
+  }
+})
+

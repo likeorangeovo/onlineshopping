@@ -3,7 +3,7 @@
  * @Author: likeorange
  * @Date: 2023-04-01 17:37:24
  * @LastEditors: likeorange
- * @LastEditTime: 2023-04-05 22:41:50
+ * @LastEditTime: 2023-04-07 22:32:00
 -->
 <template >
   <div class="goodInfo">
@@ -28,14 +28,14 @@
         <span>数量：</span>
         <el-input-number v-model="num" :min="1" :max="good.goods_number" />
       </div>
-      <button class="buyBtn" @click="buy">立即购买</button>
+      <button class="buyBtn" @click="addToOrder">立即购买</button>
       <button @click="addToCart">加入购物车</button>
     </div>
   </div>
 </template>
 <script>
 import { onBeforeMount, ref } from 'vue'
-import { goodDetail, addCart } from "../request/index.js"
+import { goodDetail, addCart, addOrder } from "../request/index.js"
 import { useRoute } from 'vue-router'
 import errThrow from "../hooks/errThrow.js";
 export default {
@@ -50,9 +50,6 @@ export default {
       const goodDetailRes = await goodDetail({ id: route.params.id })
       good.value = { ...goodDetailRes.data.data }
     })
-    function buy() {
-      console.log(addToCart)
-    }
     async function addToCart() {
       const addCartRes = await addCart(JSON.stringify({ 
         id: good.value.id,
@@ -62,13 +59,21 @@ export default {
         list_pic_url:good.value.list_pic_url,
       }))
       errThrow(addCartRes)
-      console.log(1111)
+    }
+    async function addToOrder() {
+      const addOrderRes = await addOrder(JSON.stringify({ 
+        goods_id: good.value.id,
+        total_price:good.value.retail_price,
+        price:good.value.retail_price,
+        quantity:num.value,
+      }))
+      errThrow(addOrderRes)
     }
     return {
       num,
       good,
-      buy,
       addToCart,
+      addToOrder,
       handleChange
     }
   },

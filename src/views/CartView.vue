@@ -3,7 +3,7 @@
  * @Author: likeorange
  * @Date: 2023-04-02 19:06:02
  * @LastEditors: likeorange
- * @LastEditTime: 2023-04-06 14:51:29
+ * @LastEditTime: 2023-04-08 16:28:07
 -->
 <template>
   <el-table :header-cell-style="{ textAlign: 'center' }" :cell-style="{ textAlign: 'center' }" :data="cartItems"
@@ -19,7 +19,7 @@
     <el-table-column prop="total" label="总价" width="100px"></el-table-column>
     <el-table-column label="操作" width="100px">
       <template #default="scope">
-        <el-button link size="small" @click="removeFromCart(scope.$index)">删除</el-button>
+        <el-button link size="small" @click="removeFromCart(scope.row.id,scope.$index)">删除</el-button>
       </template>
     </el-table-column>
   </el-table>
@@ -30,14 +30,15 @@
     </el-table-column>
     <el-table-column prop="" label="" width="100px">
       <template #default="scope">
-        <el-button link size="small" @click="removeFromCart(scope.$index)">下单</el-button>
+        <el-button link size="small" @click="addToOrder(scope)">下单</el-button>
       </template>
     </el-table-column>
   </el-table>
 </template>
 <script>
 import { ref, onBeforeMount } from "vue";
-import { getCart } from "../request/index.js"
+import { getCart, removeCart, addOrder } from "../request/index.js";
+import { ElMessage } from 'element-plus';
 export default {
   setup() {
     let amount = ref([{
@@ -52,9 +53,37 @@ export default {
       }
       cartItems.value.push(...cartData.data.data)
     })
+    async function removeFromCart(id,index){
+      const removeRes = await removeCart({id:id})
+      if(removeRes.data.code == 1){
+        cartItems.value.splice(index,1)
+        return ElMessage({
+        message: '删除成功',
+        type: 'success',
+      })
+      }
+      return ElMessage({
+        message: '删除失败,请稍后重试',
+        type: 'warning',
+      })
+    }
+    async function addToOrder() {
+      for(const item of cartItems.value){
+        await addOrder(JSON.stringify({ 
+        goods_id: item.goods_id,
+        total_price:item.retail_price,
+        price:item.retail_price,
+        quantity:item.number,
+      }))
+        await removeCart({id:item.id})
+      }
+      cartItems.value = []
+    }
     return {
       amount,
-      cartItems
+      cartItems,
+      removeFromCart,
+      addToOrder
     }
   }
 }
