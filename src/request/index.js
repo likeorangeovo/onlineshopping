@@ -130,3 +130,29 @@ export const changeStatus = (query) => axiosUser({
   }
 })
 
+export const getUserInfo = (query) => axiosUser({
+  url:'/getuserinfo',
+  params:query,
+  method:'get',
+  headers:{
+    'content-type':'application/json'
+  }
+})
+
+export const updateUserInfo = (query) => axiosUser({
+  url:'/updateuserinfo',
+  data:query,
+  method:'post',
+  headers:{
+    'content-type':'application/json'
+  }
+})
+
+export const updatePassword = (query) => axiosUser({
+  url:'/updatepassword',
+  data:query,
+  method:'post',
+  headers:{
+    'content-type':'application/json'
+  }
+})

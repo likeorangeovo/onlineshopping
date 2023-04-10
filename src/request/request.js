@@ -3,7 +3,7 @@
  * @Author: likeorange
  * @Date: 2023-03-29 11:42:55
  * @LastEditors: likeorange
- * @LastEditTime: 2023-03-30 17:24:18
+ * @LastEditTime: 2023-04-10 20:51:56
  */
 
 import axios from 'axios'
@@ -20,10 +20,16 @@ axiosUser.interceptors.response.use(
 	// 请求成功
 	(res) => {
 		if (res.status === 200) {
-			if (res.data.code !== '0' && res.data.msg) {
+			if (res.data.code != '0' && res.data.msg) {
 				ElMessage({
 					message: res.data.msg,
 					type: 'success',
+				})
+			}
+			else if (res.data.code == '0' && res.data.msg) {
+				ElMessage({
+					message: res.data.msg,
+					type: 'warning',
 				})
 			}
 			return Promise.resolve(res)

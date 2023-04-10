@@ -3,7 +3,7 @@
  * @Author: likeorange
  * @Date: 2023-03-29 19:43:17
  * @LastEditors: likeorange
- * @LastEditTime: 2023-03-30 17:21:06
+ * @LastEditTime: 2023-04-10 20:46:08
  */
 
 import { ElMessage } from 'element-plus'
@@ -20,11 +20,6 @@ export default function (params) {
       })
     }
   } catch (error) {
-    return function(){
-      ElMessage({
-        message: params.msg,
-        type: 'warning',
-      })
-    }
+    return ElMessage.error(params.msg)
   }
 }

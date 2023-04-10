@@ -63,8 +63,8 @@ export default {
     });
     async function loginReq() {
       const res = await login(JSON.stringify(loginForm))
-      if (res.code == 0) {
-        return errThrow(res)
+      if (res.data.code == 0) {
+        return;
       }
       store.isLogin = true;
       localStorage.setItem("isLogin",true)
