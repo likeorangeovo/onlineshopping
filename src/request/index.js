@@ -156,3 +156,12 @@ export const updatePassword = (query) => axiosUser({
     'content-type':'application/json'
   }
 })
+
+export const searchGoods = (query) => axiosUser({
+  url:'/searchgoods',
+  params:query,
+  method:'get',
+  headers:{
+    'content-type':'application/json'
+  }
+})

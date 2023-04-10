@@ -3,7 +3,7 @@
  * @Author: likeorange
  * @Date: 2023-04-01 00:24:41
  * @LastEditors: likeorange
- * @LastEditTime: 2023-04-01 17:14:10
+ * @LastEditTime: 2023-04-11 00:00:11
 -->
 
 <template>
@@ -16,12 +16,11 @@
     <el-pagination id='bottom' v-model:current-page="page" background layout="prev, pager, next" :pager-count="11"
       :total="total" @current-change="load" />
   </div>
-
 </template>
 <script>
 import goodItem from "../components/goodItem.vue";
 import { ref, onBeforeMount } from 'vue';
-import { categoryGoods } from "../request/index.js"
+import { categoryGoods, searchGoods } from "../request/index.js"
 import { useRoute } from 'vue-router'
 export default {
   name: "categoryShow",
@@ -31,13 +30,28 @@ export default {
     let goodsBox = ref([])
     const route = useRoute()
     async function load() {
-      const goodsRes = await categoryGoods({id:route.params.id ,page: page.value })
-      goodsBox.value = goodsRes.data.data
+      if (route.name == 'GoodsList') {
+        const goodsRes = await categoryGoods({ id: route.params.id, page: page.value })
+        goodsBox.value = goodsRes.data.data
+      }
+      else if (route.name == 'SearchGood') {
+        const goodsRes = await searchGoods({ keywords: route.params.content, page: page.value })
+        goodsBox.value = goodsRes.data.data
+      }
     }
     onBeforeMount(async () => {
-      const goodsRes = await categoryGoods({ id:route.params.id, page: page.value })
-      total.value = goodsRes.data.total
-      goodsBox.value.push(...goodsRes.data.data)
+      if (route.name == 'GoodsList') {
+        const goodsRes = await categoryGoods({ id: route.params.id, page: page.value })
+        total.value = goodsRes.data.total
+        goodsBox.value = []
+        goodsBox.value.push(...goodsRes.data.data)
+      }
+      else if (route.name == 'SearchGood') {
+        const goodsRes = await searchGoods({ keywords: route.params.content, page: page.value })
+        total.value = goodsRes.data.total
+        goodsBox.value = []
+        goodsBox.value.push(...goodsRes.data.data)
+      }
     })
     return {
       page,

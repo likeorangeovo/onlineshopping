@@ -3,7 +3,7 @@
  * @Author: likeorange
  * @Date: 2023-03-27 23:14:41
  * @LastEditors: likeorange
- * @LastEditTime: 2023-04-02 19:18:21
+ * @LastEditTime: 2023-04-10 23:23:33
  */
 
 import { createRouter, createWebHistory } from 'vue-router'
@@ -35,6 +35,11 @@ const router = createRouter({
             {
               path: 'goodsList/:id',
               name: 'GoodsList',
+              component: () => import('../views/GoodsList.vue'),
+            },
+            {
+              path: 'search/:content',
+              name: 'SearchGood',
               component: () => import('../views/GoodsList.vue'),
             },
           ]
