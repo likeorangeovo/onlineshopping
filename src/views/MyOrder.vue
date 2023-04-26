@@ -18,13 +18,13 @@
       <el-table-column prop="quantity" label="商品数量" width="120"></el-table-column>
       <el-table-column prop="time" label="下单时间" width="120"></el-table-column>
       <el-table-column prop="state" label="订单状态" width="120"></el-table-column>
-      <el-table-column prop="price" label="总价" width="120"></el-table-column>
+      <el-table-column prop="total_price" label="总价" width="120"></el-table-column>
       <el-table-column prop="" label="操作" width="120">
         <template #default="scope">
-          <el-button v-if="scope.row.status==0" link size="small" @click="change(scope.row.status,scope.row.order_id)">付款</el-button>
-          <el-button v-if="scope.row.status==1" link size="small" @click="change(scope.row.status,scope.row.order_id)">等待收货</el-button>
-          <el-button v-if="scope.row.status==2" link size="small" @click="change(scope.row.status,scope.row.order_id)">确认收货</el-button>
-          <el-button v-if="scope.row.status==3" link size="small">已完成</el-button>
+          <el-button type="primary" v-if="scope.row.status==0" size="small" @click="change(scope.row.status,scope.row.order_id)">付款</el-button>
+          <el-button type="primary" v-if="scope.row.status==1" size="small">等待收货</el-button>
+          <el-button type="primary" v-if="scope.row.status==2" size="small" @click="change(scope.row.status,scope.row.order_id)">确认收货</el-button>
+          <el-button type="primary" v-if="scope.row.status==3" size="small">已完成</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -39,6 +39,7 @@ export default {
     onBeforeMount(async ()=> {
       const orderRes = await getOrder()
       orderInfo.value = orderRes.data.data
+      console.log(orderInfo.value)
       for(let item of orderInfo.value){
         /*0未付款，1已付款未发货，2已发货未确认收到，3确认到货订单完成*/
         if(item.status == 0){

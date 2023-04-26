@@ -19,7 +19,7 @@
     <el-table-column prop="total" label="总价" width="100px"></el-table-column>
     <el-table-column label="操作" width="100px">
       <template #default="scope">
-        <el-button link size="small" @click="removeFromCart(scope.row.id,scope.$index)">删除</el-button>
+        <el-button type="primary" size="small" @click="removeFromCart(scope.row.id,scope.$index)">删除</el-button>
       </template>
     </el-table-column>
   </el-table>
@@ -30,7 +30,7 @@
     </el-table-column>
     <el-table-column prop="" label="" width="100px">
       <template #default="scope">
-        <el-button link size="small" @click="addToOrder(scope)">下单</el-button>
+        <el-button type="primary" size="small" @click="addToOrder(scope)">下单</el-button>
       </template>
     </el-table-column>
   </el-table>
@@ -71,7 +71,7 @@ export default {
       for(const item of cartItems.value){
         await addOrder(JSON.stringify({ 
         goods_id: item.goods_id,
-        total_price:item.retail_price,
+        total_price:item.total,
         price:item.retail_price,
         quantity:item.number,
       }))
