@@ -3,10 +3,10 @@
  * @Author: likeorange
  * @Date: 2023-03-27 23:14:41
  * @LastEditors: likeorange
- * @LastEditTime: 2023-04-02 16:07:02
+ * @LastEditTime: 2023-04-28 22:27:27
 -->
 <template>
-  <div v-cloak>
+  <div id="app" >
     <router-view v-slot="{ Component }">
     <keep-alive>
       <component :is="Component"  v-if="$route.meta.keepAlive"/>
@@ -28,7 +28,7 @@ export default {
 }
 </script>
 
-<style >
+<style>
 * {
   margin: 0;
   padding: 0;
@@ -39,9 +39,5 @@ export default {
   position: fixed;
   background-size: 100% 100%;
   overflow-y: scroll;
-}
-
-[v-cloak] {
-  display: none;
 }
 </style>

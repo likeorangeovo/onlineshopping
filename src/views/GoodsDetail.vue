@@ -3,10 +3,10 @@
  * @Author: likeorange
  * @Date: 2023-04-01 17:37:24
  * @LastEditors: likeorange
- * @LastEditTime: 2023-04-07 22:32:00
+ * @LastEditTime: 2023-04-28 22:31:03
 -->
 <template >
-  <div class="goodInfo">
+  <div class="goodInfo" v-if="isDataLoaded">
     <div>
       <img class="infoLeft" :src="good.primary_pic_url" alt="商品图片" />
     </div>
@@ -42,6 +42,7 @@ export default {
   setup() {
     let num = ref(1)
     let good = ref({})
+    let isDataLoaded = ref(false)
     const route = useRoute()
     const handleChange = () => {
       console.log(1)
@@ -49,6 +50,7 @@ export default {
     onBeforeMount(async () => {
       const goodDetailRes = await goodDetail({ id: route.params.id })
       good.value = { ...goodDetailRes.data.data }
+      isDataLoaded.value = true
     })
     async function addToCart() {
       const addCartRes = await addCart(JSON.stringify({ 
@@ -72,6 +74,7 @@ export default {
     return {
       num,
       good,
+      isDataLoaded,
       addToCart,
       addToOrder,
       handleChange

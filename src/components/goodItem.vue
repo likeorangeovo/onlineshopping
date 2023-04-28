@@ -7,12 +7,12 @@
 -->
 
 <template >
-  <li class="goodsItem">
-    <div class="imgBox">
-      <img :src=good.primary_pic_url alt="商品图片" @click="navTo('/mall/goods/')" />
+  <li class="goodsItem" >
+    <div class="imgBox" @click="navTo(good.id)">
+      <img :src=good.primary_pic_url alt="商品图片"  />
     </div>
-    <div class="goodsInfo">
-      <span class="goodsName ellipsis" @click="navTo(good.id)">{{ good.name }}</span>
+    <div class="goodsInfo" @click="navTo(good.id)">
+      <span class="goodsName ellipsis">{{ good.name }}</span>
       <span class="price">{{ '¥' + good.retail_price }}</span>
     </div>
   </li>
