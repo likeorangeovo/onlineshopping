@@ -3,19 +3,19 @@
  * @Author: likeorange
  * @Date: 2023-03-28 20:11:56
  * @LastEditors: likeorange
- * @LastEditTime: 2023-04-01 17:12:23
+ * @LastEditTime: 2023-04-28 23:25:32
 -->
 
 <template>
 
   <el-carousel indicator-position="outside" type="card" :height="'65' + 'vh'">
-    <el-carousel-item v-for="item in carouselBox" :key="item.id">
+    <el-carousel-item v-for="item in carouselBox" :key="item.id" @click="navTo(item.id)">
       <img :src=item.primary_pic_url class="image">
     </el-carousel-item>
   </el-carousel>
 
   <ul class="infinite-list">
-    <li v-for="item in hotgoodsBox" :key="item.id" class="infinite-list-item">
+    <li v-for="item in hotgoodsBox" :key="item.id" class="infinite-list-item" >
       <goodItem :good="item"></goodItem>
     </li>
   </ul>
@@ -27,8 +27,10 @@
 </template>
 <script>
 import goodItem from "../components/goodItem.vue";
+import { store } from "../request/store.js";
 import { ref, onBeforeMount } from 'vue';
 import { carousel, hotgoods } from "../request/index.js"
+import { useRouter } from 'vue-router'
 export default {
   name: "homeView",
   setup() {
@@ -36,11 +38,24 @@ export default {
     let total = ref(0)
     let carouselBox = ref([])
     let hotgoodsBox = ref([])
+    const router = useRouter()
     async function load() {
       const hotgoodsRes = await hotgoods({ page: page.value })
       hotgoodsBox.value = hotgoodsRes.data.data
     }
-
+    const navTo = function (id) {
+      if (store.isLogin) {
+        return router.push({
+          name: 'GoodsDetail',
+          params: {
+            id: id,
+          },
+        });
+      }
+      return router.push({
+        name: 'login'
+      });
+    }
     onBeforeMount(async () => {
       //dom 挂载后
       const carouselRes = await carousel()
@@ -55,6 +70,7 @@ export default {
       carouselBox,
       hotgoodsBox,
       load,
+      navTo
     }
   },
   components: {
