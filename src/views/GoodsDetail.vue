@@ -3,7 +3,7 @@
  * @Author: likeorange
  * @Date: 2023-04-01 17:37:24
  * @LastEditors: likeorange
- * @LastEditTime: 2023-04-29 17:25:09
+ * @LastEditTime: 2023-04-30 00:10:01
 -->
 <template >
   <div class="goodInfo" v-if="isDataLoaded">
@@ -32,55 +32,89 @@
       <button @click="addToCart">加入购物车</button>
     </div>
   </div>
+
+  <div class="like" v-if="isDataLoaded">
+    猜你喜欢
+  </div>
+  <div class="recommend-products" v-if="isDataLoaded">
+    <div class="product" v-for="product in products" :key="product.id">
+      <img :src="product.list_pic_url" alt="product image" style="height: 250px; width: auto;">
+      <div class="product-details">
+        <div class="product-name">{{ product.name }}</div>
+        <div>{{ product.goods_brief }}</div>
+        <div class="product-price">{{ '¥' + product.retail_price }}</div>
+        <el-button type="primary" class="product-buy" @click="navTo(product.id)">查看详情</el-button>
+      </div>
+    </div>
+  </div>
 </template>
 <script>
 import { onBeforeMount, ref } from 'vue'
 import { goodDetail, addCart, addOrder, getRecommendGoods } from "../request/index.js"
-import { useRoute } from 'vue-router'
-import { recommendId } from "../request/store.js"
+import { useRoute,useRouter } from 'vue-router'
+import { store, recommendId } from "../request/store.js"
 import errThrow from "../hooks/errThrow.js";
 export default {
   setup() {
     let num = ref(1)
     let good = ref({})
     let isDataLoaded = ref(false)
+    let products = ref([])
     const route = useRoute()
+    const router = useRouter()
     const handleChange = () => {
       console.log(1)
     }
     onBeforeMount(async () => {
       const goodDetailRes = await goodDetail({ id: route.params.id })
       good.value = { ...goodDetailRes.data.data }
-      console.log(recommendId.value)
-      await getRecommendGoods(JSON.parse(recommendId.value))
+      const recommendGoodsInfo = await getRecommendGoods(JSON.parse(recommendId.value))
+      products.value = recommendGoodsInfo.data.data
       isDataLoaded.value = true
     })
     async function addToCart() {
-      const addCartRes = await addCart(JSON.stringify({ 
+      const addCartRes = await addCart(JSON.stringify({
         id: good.value.id,
-        name:good.value.name,
-        retail_price:good.value.retail_price,
-        goods_number:num.value,
-        list_pic_url:good.value.list_pic_url,
+        name: good.value.name,
+        retail_price: good.value.retail_price,
+        goods_number: num.value,
+        list_pic_url: good.value.list_pic_url,
       }))
       errThrow(addCartRes)
     }
     async function addToOrder() {
-      const addOrderRes = await addOrder(JSON.stringify({ 
+      const addOrderRes = await addOrder(JSON.stringify({
         goods_id: good.value.id,
-        total_price:good.value.retail_price,
-        price:good.value.retail_price,
-        quantity:num.value,
+        total_price: good.value.retail_price,
+        price: good.value.retail_price,
+        quantity: num.value,
       }))
       errThrow(addOrderRes)
+    }
+    const navTo = function (id) {
+      if (store.isLogin) {
+        router.push({
+          name: 'GoodsDetail',
+          params: {
+            id: id,
+          },
+        });
+        window.location.reload()
+        return;
+      }
+      return router.push({
+        name: 'login'
+      });
     }
     return {
       num,
       good,
+      products,
       isDataLoaded,
       addToCart,
       addToOrder,
-      handleChange
+      handleChange,
+      navTo
     }
   },
 
@@ -148,5 +182,48 @@ button {
   font-size: 19px;
   margin-right: 20px;
   margin-top: 30px;
+}
+
+
+
+.recommend-products {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  margin: 20px 600px 60px 60px;
+}
+
+.product {
+  display: flex;
+  flex-direction: row;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-bottom: 20px;
+  overflow: hidden;
+}
+
+.product-details {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0px 30px;
+  width: 70%;
+}
+
+.product-name {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.product-price {
+  margin-top: 5px;
+  font-size: 14px;
+  color: #f60;
+}
+.like{
+  margin: 60px 600px 20px 100px;
+  font-size: 30px;
+  font-weight: bold;
+
 }
 </style>
