@@ -3,7 +3,7 @@
  * @Author: likeorange
  * @Date: 2023-03-29 11:48:45
  * @LastEditors: likeorange
- * @LastEditTime: 2023-04-06 14:21:48
+ * @LastEditTime: 2023-04-29 16:13:00
  */
 import axiosUser from "./request";
 
@@ -160,6 +160,23 @@ export const updatePassword = (query) => axiosUser({
 export const searchGoods = (query) => axiosUser({
   url:'/searchgoods',
   params:query,
+  method:'get',
+  headers:{
+    'content-type':'application/json'
+  }
+})
+
+export const recommendGoods = () => axiosUser({
+  url:'/recommendgoods',
+  method:'get',
+  headers:{
+    'content-type':'application/json'
+  }
+})
+
+export const getRecommendGoods = (params) => axiosUser({
+  url:'/getrecommendgoods',
+  params:params,
   method:'get',
   headers:{
     'content-type':'application/json'

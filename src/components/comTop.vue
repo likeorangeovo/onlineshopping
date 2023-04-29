@@ -22,7 +22,7 @@
 </template>
 <script>
 import { ref } from "vue";
-import { store } from "../request/store.js";
+import { store,recommendId } from "../request/store.js";
 import { logout } from "../request/index.js"
 import  errThrow  from "../hooks/errThrow.js";
 export default {
@@ -35,7 +35,9 @@ export default {
       const logoutRes = await logout()
       errThrow(logoutRes)
       localStorage.removeItem("isLogin")
+      localStorage.removeItem("recommendId")
       store.isLogin = false;
+      recommendId.value = [];
     }
     return {
       activeIndex,

@@ -3,7 +3,7 @@
  * @Author: likeorange
  * @Date: 2023-03-28 22:02:42
  * @LastEditors: likeorange
- * @LastEditTime: 2023-04-03 23:46:50
+ * @LastEditTime: 2023-04-29 16:57:41
 -->
 <template>
   <div id="background">
@@ -48,9 +48,9 @@
 
 <script>
 import { reactive, ref } from "vue";
-import { login, register } from "../request/index.js"
+import { login, register,recommendGoods } from "../request/index.js"
 import errThrow from "../hooks/errThrow.js"
-import { store } from "../request/store.js";
+import { store,recommendId } from "../request/store.js";
 import { useRouter } from 'vue-router'
 export default {
   name: "LoginView",
@@ -68,6 +68,11 @@ export default {
       }
       store.isLogin = true;
       localStorage.setItem("isLogin",true)
+      
+      const ids = await recommendGoods()
+      recommendId.value = ids.data
+      localStorage.setItem("recommendId", JSON.stringify(ids.data))
+
       router.push({
         name: 'MallIndex',
       })

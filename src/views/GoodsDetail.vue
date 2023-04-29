@@ -3,7 +3,7 @@
  * @Author: likeorange
  * @Date: 2023-04-01 17:37:24
  * @LastEditors: likeorange
- * @LastEditTime: 2023-04-28 22:31:03
+ * @LastEditTime: 2023-04-29 17:25:09
 -->
 <template >
   <div class="goodInfo" v-if="isDataLoaded">
@@ -35,8 +35,9 @@
 </template>
 <script>
 import { onBeforeMount, ref } from 'vue'
-import { goodDetail, addCart, addOrder } from "../request/index.js"
+import { goodDetail, addCart, addOrder, getRecommendGoods } from "../request/index.js"
 import { useRoute } from 'vue-router'
+import { recommendId } from "../request/store.js"
 import errThrow from "../hooks/errThrow.js";
 export default {
   setup() {
@@ -50,6 +51,8 @@ export default {
     onBeforeMount(async () => {
       const goodDetailRes = await goodDetail({ id: route.params.id })
       good.value = { ...goodDetailRes.data.data }
+      console.log(recommendId.value)
+      await getRecommendGoods(JSON.parse(recommendId.value))
       isDataLoaded.value = true
     })
     async function addToCart() {
