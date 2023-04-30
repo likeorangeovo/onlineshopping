@@ -3,7 +3,7 @@
  * @Author: likeorange
  * @Date: 2023-04-02 19:06:02
  * @LastEditors: likeorange
- * @LastEditTime: 2023-04-08 16:28:07
+ * @LastEditTime: 2023-04-30 23:47:47
 -->
 <template>
   <el-table :header-cell-style="{ textAlign: 'center' }" :cell-style="{ textAlign: 'center' }" :data="cartItems"
@@ -14,10 +14,11 @@
       </template>
     </el-table-column>
     <el-table-column prop="goods_name" label="商品名称" width="auto"></el-table-column>
-    <el-table-column prop="retail_price" label="价格" width="100px"></el-table-column>
+    <el-table-column prop="retail_price" label="单价" width="100px"></el-table-column>
     <el-table-column prop="number" label="数量" width="auto">
       <template #default="scope">
-        <el-input-number v-model="scope.row.number" :min="1" :max="99"/>
+        <el-input-number v-model="scope.row.number" :min="1" :max="99"
+        @change="(currentValue,oldValue) => {handleChange(currentValue,oldValue,scope.row)}"/>
       </template>
     </el-table-column>
     <el-table-column prop="total" label="总价" width="100px"></el-table-column>
@@ -56,8 +57,17 @@ export default {
         amount.value[0].price += item.total
       }
       cartItems.value.push(...cartData.data.data)
-      console.log(cartItems.value)
     })
+    function handleChange(newval,oldval,item){
+      if(newval>oldval){
+        item.total += Number(item.retail_price)
+        amount.value[0].price += Number(item.retail_price)
+      }
+      else if(newval<oldval){
+        item.total -= Number(item.retail_price)
+        amount.value[0].price -= Number(item.retail_price)
+      }
+    }
     async function removeFromCart(id, index) {
       const removeRes = await removeCart({ id: id })
       if (removeRes.data.code == 1) {
@@ -87,6 +97,7 @@ export default {
     return {
       amount,
       cartItems,
+      handleChange,
       removeFromCart,
       addToOrder
     }
