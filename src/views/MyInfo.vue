@@ -3,14 +3,14 @@
  * @Author: likeorange
  * @Date: 2023-04-02 19:10:05
  * @LastEditors: likeorange
- * @LastEditTime: 2023-04-10 20:32:20
+ * @LastEditTime: 2023-04-30 19:54:29
 -->
 <template>
   <div class="personal-info">
     <el-form :model="formData" :label-width="formLabelWidth" ref="form">
-      <el-form-item label="头像">
+      <!-- <el-form-item label="头像">
         <el-avatar :src="formData.avatar" :size="100"></el-avatar>
-      </el-form-item>
+      </el-form-item> -->
       <el-form-item label="昵称" prop="nickname">
         <el-input v-model="formData.username"></el-input>
       </el-form-item>
@@ -108,4 +108,8 @@ export default {
   }
 }
 </script>
-<style></style>
+<style scoped>
+.personal-info{
+  margin: 30px 50px 30px 0px;
+}
+</style>

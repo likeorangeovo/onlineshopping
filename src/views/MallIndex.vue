@@ -3,16 +3,17 @@
  * @Author: likeorange
  * @Date: 2023-03-28 20:11:56
  * @LastEditors: likeorange
- * @LastEditTime: 2023-04-28 23:25:32
+ * @LastEditTime: 2023-04-30 20:03:28
 -->
 
 <template>
-
-  <el-carousel indicator-position="outside" type="card" :height="'65' + 'vh'">
+  <div class="carousel">
+    <el-carousel indicator-position="outside"  :height="'300px'" :width="'100px'">
     <el-carousel-item v-for="item in carouselBox" :key="item.id" @click="navTo(item.id)">
       <img :src=item.primary_pic_url class="image">
     </el-carousel-item>
   </el-carousel>
+  </div>
 
   <ul class="infinite-list">
     <li v-for="item in hotgoodsBox" :key="item.id" class="infinite-list-item" >
@@ -81,9 +82,9 @@ export default {
 </script>
 <style scoped>
 /* 轮播图样式 */
-:deep(.el-carousel__item) {
-  /*修改卡片宽度*/
+.carousel{
   width: 50vw;
+  margin: 20px auto;
 }
 
 .el-carousel__item:nth-child(2n) {
@@ -98,6 +99,7 @@ export default {
   /*设置图片宽度*/
   width: 100%;
   height: inherit;
+  object-fit: contain;
 }
 
 /* 无限滚动样式 */

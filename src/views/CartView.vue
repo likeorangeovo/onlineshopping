@@ -10,16 +10,20 @@
     style="width: 100%">
     <el-table-column prop="list_pic_url" label="商品图片" width="100px">
       <template #default="scope">
-        <el-image style="width: 100px; height: 100px" :src="scope.row.list_pic_url"/>
+        <el-image style="width: 100px; height: 100px" :src="scope.row.list_pic_url" />
       </template>
     </el-table-column>
     <el-table-column prop="goods_name" label="商品名称" width="auto"></el-table-column>
     <el-table-column prop="retail_price" label="价格" width="100px"></el-table-column>
-    <el-table-column prop="number" label="数量" width="100px"></el-table-column>
+    <el-table-column prop="number" label="数量" width="auto">
+      <template #default="scope">
+        <el-input-number v-model="scope.row.number" :min="1" :max="99"/>
+      </template>
+    </el-table-column>
     <el-table-column prop="total" label="总价" width="100px"></el-table-column>
     <el-table-column label="操作" width="100px">
       <template #default="scope">
-        <el-button type="primary" size="small" @click="removeFromCart(scope.row.id,scope.$index)">删除</el-button>
+        <el-button type="primary" size="small" @click="removeFromCart(scope.row.id, scope.$index)">删除</el-button>
       </template>
     </el-table-column>
   </el-table>
@@ -47,20 +51,21 @@ export default {
     let cartItems = ref([])
     onBeforeMount(async () => {
       const cartData = await getCart();
-      for(let item of cartData.data.data){
+      for (let item of cartData.data.data) {
         item.total = item.retail_price * item.number
         amount.value[0].price += item.total
       }
       cartItems.value.push(...cartData.data.data)
+      console.log(cartItems.value)
     })
-    async function removeFromCart(id,index){
-      const removeRes = await removeCart({id:id})
-      if(removeRes.data.code == 1){
-        cartItems.value.splice(index,1)
+    async function removeFromCart(id, index) {
+      const removeRes = await removeCart({ id: id })
+      if (removeRes.data.code == 1) {
+        cartItems.value.splice(index, 1)
         return ElMessage({
-        message: '删除成功',
-        type: 'success',
-      })
+          message: '删除成功',
+          type: 'success',
+        })
       }
       return ElMessage({
         message: '删除失败,请稍后重试',
@@ -68,14 +73,14 @@ export default {
       })
     }
     async function addToOrder() {
-      for(const item of cartItems.value){
-        await addOrder(JSON.stringify({ 
-        goods_id: item.goods_id,
-        total_price:item.total,
-        price:item.retail_price,
-        quantity:item.number,
-      }))
-        await removeCart({id:item.id})
+      for (const item of cartItems.value) {
+        await addOrder(JSON.stringify({
+          goods_id: item.goods_id,
+          total_price: item.total,
+          price: item.retail_price,
+          quantity: item.number,
+        }))
+        await removeCart({ id: item.id })
       }
       cartItems.value = []
     }

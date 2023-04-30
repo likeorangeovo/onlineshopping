@@ -3,12 +3,12 @@
  * @Author: likeorange
  * @Date: 2023-04-01 17:37:24
  * @LastEditors: likeorange
- * @LastEditTime: 2023-04-30 00:10:01
+ * @LastEditTime: 2023-04-30 20:39:19
 -->
 <template >
   <el-breadcrumb separator="/" class="breadcrumb">
     <el-breadcrumb-item :to="{path: '/mall/show'}">首页</el-breadcrumb-item>
-    <el-breadcrumb-item :to="{path: $route.path}">购物车</el-breadcrumb-item>
+    <el-breadcrumb-item :to="{path: $route.path}">商品详情</el-breadcrumb-item>
   </el-breadcrumb>
   <div class="goodInfo" v-if="isDataLoaded">
     <div>
@@ -230,7 +230,7 @@ button {
 }
 
 .breadcrumb{
-  padding: 30px 140px 0px 60px;
+  padding: 30px 0px 0px 60px;
   font-size: 20px;
 }
 </style>

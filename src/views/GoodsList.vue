@@ -73,7 +73,7 @@ export default {
   display: flex;
   flex-wrap: wrap;
   justify-items: center;
-  padding: 0 5px;
+  padding: 30px 5px;
   list-style-type: none;
 }
 
