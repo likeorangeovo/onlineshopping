@@ -6,6 +6,10 @@
  * @LastEditTime: 2023-04-30 00:10:01
 -->
 <template >
+  <el-breadcrumb separator="/" class="breadcrumb">
+    <el-breadcrumb-item :to="{path: '/mall/show'}">首页</el-breadcrumb-item>
+    <el-breadcrumb-item :to="{path: $route.path}">购物车</el-breadcrumb-item>
+  </el-breadcrumb>
   <div class="goodInfo" v-if="isDataLoaded">
     <div>
       <img class="infoLeft" :src="good.primary_pic_url" alt="商品图片" />
@@ -99,7 +103,6 @@ export default {
             id: id,
           },
         });
-        window.location.reload()
         return;
       }
       return router.push({
@@ -224,6 +227,10 @@ button {
   margin: 60px 600px 20px 100px;
   font-size: 30px;
   font-weight: bold;
+}
 
+.breadcrumb{
+  padding: 30px 140px 0px 60px;
+  font-size: 20px;
 }
 </style>

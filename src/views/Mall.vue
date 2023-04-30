@@ -8,7 +8,7 @@
 
 <template>
   <comTop></comTop>
-  <router-view></router-view>
+  <router-view :key="$route.fullPath"></router-view>
 </template>
 <script>
 import comTop from "../components/comTop.vue";
