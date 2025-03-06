@@ -9,9 +9,9 @@
   <div class="search">
     <el-input placeholder="请输入内容" v-model="content">
       <template #suffix>
-        <el-icon class="el-input__icon" @click='searchGood(content)'>
-          <Search />
-        </el-icon>
+          <el-icon class="el-input__icon" @click='searchGood(content)'>
+            <Search />
+          </el-icon>
       </template>
     </el-input>
   </div>
@@ -20,7 +20,7 @@
     <el-menu-item index="/mall/show">首页</el-menu-item>
     <el-sub-menu :index=item.id v-for="item in mainCatrgory" :key="item.id">
       <template #title>{{ item.name }}</template>
-      <el-menu-item :index="'/mall/show/goodsList/' + sub.id" v-for="( sub ) in item.sub" :key="sub.id">{{ sub.name
+      <el-menu-item :index="'/mall/show/goodsList/' + sub.id" v-for="(sub) in item.sub" :key="sub.id">{{ sub.name
       }}</el-menu-item>
     </el-sub-menu>
   </el-menu>
@@ -41,13 +41,13 @@ export default {
       return;
     }
     function searchGood(content) {
-      if(content != ''){
+      if (content != '') {
         return router.replace({
-        name: 'SearchGood', 
-        params:{
-          content: content
-        }
-      })
+          name: 'SearchGood',
+          params: {
+            content: content
+          }
+        })
       }
     }
     onBeforeMount(async () => {
@@ -83,9 +83,11 @@ export default {
 
 .search {
   display: flex;
-  height: 6vh;
-  font-size: 3vh;
-  margin: 1% 20%;
+  height: 50px;
+  width: 800px;
+  font-size: 20px;
+  margin: 0 auto 30px auto;
+  padding-top: 30px;
 }
 
 :deep(.el-input) {

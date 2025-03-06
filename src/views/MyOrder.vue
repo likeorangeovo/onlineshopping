@@ -6,7 +6,7 @@
  * @LastEditTime: 2023-04-30 20:31:29
 -->
 <template>
-  <el-tabs v-model="activeName" stretch='true'>
+  <el-tabs v-model="activeName" stretch='true' style="background-color: white;">
     <el-tab-pane  label="全部" name="allorders">
     <el-table :header-cell-style="{ textAlign: 'center' }" :cell-style="{ textAlign: 'center' }" :data="orderInfo">
       <el-table-column prop="order_id" label="订单号" width="150"></el-table-column>

@@ -8,7 +8,9 @@
 
 <template>
   <comTop></comTop>
-  <router-view :key="$route.fullPath"></router-view>
+  <div class="back">
+    <router-view :key="$route.fullPath"></router-view>
+  </div>
 </template>
 <script>
 import comTop from "../components/comTop.vue";
@@ -38,4 +40,14 @@ export default {
   }
 }
 </script>
-<style scoped></style>
+<style scoped>
+.back {
+  width: 100%;
+  /* background-image: linear-gradient(#e8f3ff, #fff); */
+  background-image: 
+    linear-gradient(to bottom, transparent, white), /* 从透明到白色的渐变 */
+    url('../asserts/images/new-content-bg.png'); /* 背景图片 */
+  background-size: 100% 800px;
+  background-repeat: no-repeat;
+}
+</style>

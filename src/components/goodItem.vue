@@ -55,12 +55,15 @@ export default {
   width: 266px;
   height: 360px;
   overflow: hidden;
+  border-style:solid;
+  border-color: #90baff;
 }
 
 .imgBox {
   width: 100%;
   height: 266px;
   overflow: hidden;
+  border-bottom: 2px solid #90baff;
 }
 
 .imgBox img {
